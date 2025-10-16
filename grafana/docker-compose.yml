@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: taskflow-sql
+    environment:
+      SA_PASSWORD: "YourStrong!Passw0rd"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+    networks:
+      - taskflow-net
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: taskflow-prometheus
+    volumes:
+      - ./provisioning/datasources:/etc/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - taskflow-net
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: taskflow-grafana
+    depends_on:
+      - prometheus
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./provisioning/dashboards:/var/lib/grafana/dashboards
+      - ./provisioning/datasources:/etc/grafana/provisioning/datasources
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - taskflow-net
+
+volumes:
+  sql_data:
+
+networks:
+  taskflow-net:
+    driver: bridge
