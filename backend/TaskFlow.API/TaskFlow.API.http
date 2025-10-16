@@ -1,6 +1,33 @@
-@TaskFlow.API_HostAddress = http://localhost:5236
+@baseUrl = http://localhost:5236/api
 
-GET {{TaskFlow.API_HostAddress}}/weatherforecast/
+### Get all tasks
+GET {{baseUrl}}/tasks
 Accept: application/json
 
-###
+### Get task by ID
+GET {{baseUrl}}/tasks/1
+Accept: application/json
+
+### Create new task
+POST {{baseUrl}}/tasks
+Content-Type: application/json
+
+{
+  "title": "Sample Task",
+  "description": "This is a sample task description",
+  "isCompleted": false
+}
+
+### Update existing task
+PUT {{baseUrl}}/tasks/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "title": "Updated Task",
+  "description": "This is an updated task description",
+  "isCompleted": true
+}
+
+### Delete task
+DELETE {{baseUrl}}/tasks/1
