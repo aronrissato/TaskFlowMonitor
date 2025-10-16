@@ -1,6 +1,8 @@
-﻿namespace TaskFlow.API.Services;
+﻿using TaskFlow.Domain.Interfaces;
 
-public class TaskService
+namespace TaskFlow.API.Services;
+
+public class TaskService : ITaskService
 {
     
 }

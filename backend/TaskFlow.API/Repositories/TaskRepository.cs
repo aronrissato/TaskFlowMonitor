@@ -1,6 +1,8 @@
-﻿namespace TaskFlow.API.Repositories;
+﻿using TaskFlow.Domain.Interfaces;
 
-public class TaskRepository
+namespace TaskFlow.API.Repositories;
+
+public class TaskRepository : ITaskRepository
 {
     
 }
