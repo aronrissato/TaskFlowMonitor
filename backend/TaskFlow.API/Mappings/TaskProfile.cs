@@ -15,6 +15,11 @@ namespace TaskFlow.API.Mappings
 
             // Entity -> DTO
             CreateMap<TaskItem, TaskDto>();
+
+            // Entity -> Entity
+            CreateMap<TaskItem, TaskItem>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore())
+                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
         }
     }
 }

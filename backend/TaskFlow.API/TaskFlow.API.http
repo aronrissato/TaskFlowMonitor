@@ -24,8 +24,8 @@ Content-Type: application/json
 
 {
   "id": 1,
-  "title": "Updated Task",
-  "description": "This is an updated task description",
+  "title": "Sample Task",
+  "description": "This is a sample task description",
   "isCompleted": true
 }
 

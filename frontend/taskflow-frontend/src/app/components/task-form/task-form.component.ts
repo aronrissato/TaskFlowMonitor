@@ -73,7 +73,7 @@ export class TaskFormComponent implements OnInit {
     const taskData = this.taskForm.value;
 
     if (this.isEditMode && this.taskId) {
-      this.taskService.update(this.taskId, taskData).subscribe({
+      this.taskService.update(this.taskId, { ...taskData, id: this.taskId }).subscribe({
         next: () => {
           this.successMessage = 'Task updated successfully!';
           this.loading = false;

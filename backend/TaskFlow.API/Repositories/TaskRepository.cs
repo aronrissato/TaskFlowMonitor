@@ -28,6 +28,7 @@ public class TaskRepository(AppDbContext context, IMapper mapper) : ITaskReposit
             return false;
 
         mapper.Map(item, existing);
+        existing.CompletedAt = existing.IsCompleted ? DateTime.UtcNow : null;
         
         context.SaveChanges();
         return true;
