@@ -1,0 +1,49 @@
+<div class="task-list">
+  <div class="header">
+    <h2>Tasks</h2>
+    <a routerLink="/tasks/new" class="btn btn-primary">+ New Task</a>
+  </div>
+
+  <div *ngIf="loading" class="loading">Loading...</div>
+  <div *ngIf="error" class="alert alert-error">{{ error }}</div>
+  <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
+  <table *ngIf="!loading && tasks.length > 0" class="table">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of tasks">
+        <td>{{ task.id }}</td>
+        <td>{{ task.title }}</td>
+        <td>{{ task.description || '-' }}</td>
+        <td>
+          <span [class]="task.isCompleted ? 'badge badge-success' : 'badge badge-pending'">
+            {{ task.isCompleted ? 'Completed' : 'Pending' }}
+          </span>
+        </td>
+        <td>
+          <div class="action-buttons">
+            <a [routerLink]="['/tasks', task.id, 'edit']" class="btn btn-sm btn-secondary" title="Edit">
+              ✏️ Edit
+            </a>
+            <button (click)="onDelete(task)" class="btn btn-sm btn-danger" title="Delete">
+              🗑️ Delete
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && tasks.length === 0" class="empty-state">
+    <p>No tasks found.</p>
+    <a routerLink="/tasks/new" class="btn btn-primary">Create first task</a>
+  </div>
+</div>

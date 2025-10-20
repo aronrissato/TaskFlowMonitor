@@ -1,7 +1,21 @@
 import { Routes } from '@angular/router';
-import { TaskListComponent } from './components/task-list/task-list';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'tasks', pathMatch: 'full' },
-  { path: 'tasks', component: TaskListComponent }
+  {
+    path: '',
+    redirectTo: '/tasks',
+    pathMatch: 'full'
+  },
+  {
+    path: 'tasks',
+    loadComponent: () => import('./components/task-list/task-list.component').then(m => m.TaskListComponent)
+  },
+  {
+    path: 'tasks/new',
+    loadComponent: () => import('./components/task-form/task-form.component').then(m => m.TaskFormComponent)
+  },
+  {
+    path: 'tasks/:id/edit',
+    loadComponent: () => import('./components/task-form/task-form.component').then(m => m.TaskFormComponent)
+  }
 ];
