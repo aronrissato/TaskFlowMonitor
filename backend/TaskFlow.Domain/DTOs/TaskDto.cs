@@ -1,4 +1,4 @@
-﻿namespace TaskFlow.API.DTOs;
+namespace TaskFlow.Domain.DTOs;
 
 public class TaskDto
 {
@@ -7,3 +7,4 @@ public class TaskDto
     public string? Description { get; set; }
     public bool IsCompleted { get; set; }
 }
+

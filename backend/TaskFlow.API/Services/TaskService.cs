@@ -1,22 +1,37 @@
-﻿using TaskFlow.Domain.Entities;
+﻿using AutoMapper;
+using TaskFlow.Domain.DTOs;
+using TaskFlow.Domain.Entities;
 using TaskFlow.Domain.Interfaces;
 
 namespace TaskFlow.API.Services;
 
-public class TaskService(ITaskRepository repository) : ITaskService
+public class TaskService(ITaskRepository repository, IMapper mapper) : ITaskService
 {
-    public List<TaskItem> GetAll() => repository.GetAll();
-
-    public TaskItem? GetById(int id) => repository.GetById(id);
-
-    public TaskItem Add(TaskItem item)
+    public List<TaskDto> GetAll()
     {
-        item.CreatedAt = DateTime.UtcNow;
-        repository.Add(item);
-        return item;
+        var entities = repository.GetAll();
+        return mapper.Map<List<TaskDto>>(entities);
     }
 
-    public bool Update(TaskItem item) => repository.Update(item);
+    public TaskDto? GetById(int id)
+    {
+        var entity = repository.GetById(id);
+        return entity != null ? mapper.Map<TaskDto>(entity) : null;
+    }
+
+    public TaskDto Add(TaskDto taskDto)
+    {
+        var entity = mapper.Map<TaskItem>(taskDto);
+        entity.CreatedAt = DateTime.UtcNow;
+        repository.Add(entity);
+        return mapper.Map<TaskDto>(entity);
+    }
+
+    public bool Update(TaskDto taskDto)
+    {
+        var entity = mapper.Map<TaskItem>(taskDto);
+        return repository.Update(entity);
+    }
 
     public bool Delete(int id) => repository.Delete(id);
 }

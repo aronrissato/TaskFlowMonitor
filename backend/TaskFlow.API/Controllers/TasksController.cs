@@ -1,21 +1,18 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using TaskFlow.API.DTOs;
-using TaskFlow.Domain.Entities;
+﻿using Microsoft.AspNetCore.Mvc;
+using TaskFlow.Domain.DTOs;
 using TaskFlow.Domain.Interfaces;
 
 namespace TaskFlow.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class TasksController(ITaskService service, IMapper mapper) : ControllerBase
+public class TasksController(ITaskService service) : ControllerBase
 {
     [HttpGet]
     public IActionResult GetAll()
     {
         var tasks = service.GetAll();
-        var dtos = mapper.Map<List<TaskDto>>(tasks);
-        return Ok(dtos);
+        return Ok(tasks);
     }
 
     [HttpGet("{id:int}")]
@@ -24,8 +21,7 @@ public class TasksController(ITaskService service, IMapper mapper) : ControllerB
         var task = service.GetById(id);
         if (task == null)
             return NotFound();
-        var dto = mapper.Map<TaskDto>(task);
-        return Ok(dto);
+        return Ok(task);
     }
 
     [HttpPost]
@@ -34,10 +30,7 @@ public class TasksController(ITaskService service, IMapper mapper) : ControllerB
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var task = mapper.Map<TaskItem>(taskDto);
-        var createdTask = service.Add(task);
-        var createdDto = mapper.Map<TaskDto>(createdTask);
-
+        var createdDto = service.Add(taskDto);
         return CreatedAtAction(nameof(GetById), new { id = createdDto.Id }, createdDto);
     }
 
@@ -47,8 +40,7 @@ public class TasksController(ITaskService service, IMapper mapper) : ControllerB
         if (id != taskDto.Id)
             return BadRequest();
 
-        var task = mapper.Map<TaskItem>(taskDto);
-        var updated = service.Update(task);
+        var updated = service.Update(taskDto);
         if (!updated)
             return NotFound();
 

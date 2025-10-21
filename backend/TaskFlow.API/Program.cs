@@ -3,11 +3,11 @@ using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Prometheus;
 using TaskFlow.API.Mappings;
-using TaskFlow.API.Repositories;
 using TaskFlow.API.Services;
 using TaskFlow.Domain.Interfaces;
 using TaskFlow.Domain.Validators;
 using TaskFlow.Infrastructure.Data;
+using TaskFlow.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();

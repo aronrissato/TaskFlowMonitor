@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using TaskFlow.API.DTOs;
+using TaskFlow.Domain.DTOs;
 using TaskFlow.Domain.Entities;
 
 namespace TaskFlow.API.Mappings
